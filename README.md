@@ -1,6 +1,6 @@
 # **NeuroForecast**
 
-**NeuroForecast** is a lightweight "Mini AutoML" library for time series forecasting. It leverages Large Language Models (LLMs) to act as the data scientist—analyzing your dataset's statistical profile and recommending the best algorithm (LightGBM, XGBoost, Prophet, or SVM) along with optimal hyperparameters and feature engineering strategies.
+**NeuroForecast** is an AI-driven "AutoML" library for time series forecasting. It leverages Large Language Models (LLMs) to act as the data scientist—analyzing your dataset's statistical profile and recommending the best algorithm (LightGBM, XGBoost, Prophet, or SVM) along with optimal hyperparameters and feature engineering strategies.
 
 ## **Features**
 
@@ -27,7 +27,7 @@ NeuroForecast requires **Python 3.8+**.
    * For Prophet: pip install prophet  
    * For SVM: pip install scikit-learn
 
-## ** Quick Start**
+## **Quick Start**
 
 import pandas as pd  
 from neuro_forecast import NeuroForecaster
@@ -64,9 +64,9 @@ forecast = nf.predict(future_df)
 print(forecast)
 ```
 
-## ** Architecture**
+## **Architecture**
 
-### **1\. DataProfiler**
+### **1. DataProfiler**
 
 Analyzes the raw time series before any training occurs. It calculates:
 
@@ -105,18 +105,18 @@ A wrapper layer that standardizes the inputs/outputs for:
 * ProphetWrapper  
 * SVMWrapper (SVR)
 
-## **📝 Advanced Usage**
+## **Advanced Usage**
 
 ### **Using Regressors (External Variables)**
 
 If your dataset has external drivers (e.g., temperature, promotion\_active), pass them during fit:
 
 ```python
-nf.fit(  
-    df,   
-    date\_col='date',   
-    y\_col='sales',   
-    regressors=\['temperature', 'promotion\_active'\]  
+nf.fit(
+    df, 
+    date_col='date', 
+    y_col='sales', 
+    regressors=['temperature', 'promotion_active']
 )
 ```
 
