@@ -1,5 +1,9 @@
 # **NeuroForecast**
 
+
+![Static Badge](https://img.shields.io/badge/status-in_development-yellow?style=for-the-badge)
+
+
 **NeuroForecast** is an AI-driven "AutoML" library for time series forecasting. It leverages Large Language Models (LLMs) to act as the data scientist—analyzing your dataset's statistical profile and recommending the best algorithm (LightGBM, XGBoost, Prophet, or SVM) along with optimal hyperparameters and feature engineering strategies.
 
 ## **Features**
