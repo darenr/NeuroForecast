@@ -3,10 +3,10 @@ import numpy as np
 import json
 import warnings
 import re
-from typing import List, Dict, Any, Optional, Union, Callable
+from typing import List, Dict, Any, Callable
 from dataclasses import dataclass
 from scipy import stats
-from scipy.signal import periodogram
+from textwrap import dedent
 
 # Import modeling libraries
 # In a real package, these would be optional dependencies
@@ -280,41 +280,41 @@ class NeuroForecaster:
         self.suggestion = None
 
     def _construct_prompt(self, profile: Dict) -> str:
-        return f"""
-You are an expert Time Series Forecasting AutoML system. 
-I will provide statistics about a dataset. You must recommend the BEST algorithm 
-and a specific set of hyperparameters.
+        return dedent(f"""
+            You are an expert Time Series Forecasting AutoML system. 
+            I will provide statistics about a dataset. You must recommend the BEST algorithm 
+            and a specific set of hyperparameters.
 
-**Dataset Statistics:**
-- Length: {profile["n_samples"]} rows
-- Range: {profile["start_date"]} to {profile["end_date"]}
-- Trend: {profile["trend"]}
-- Seasonality: {profile["seasonality"]}
-- Volatility: {profile["volatility"]}
-- Missing/Zero values: {profile["missing_values"]} missing, {profile["zero_values"]} zeros.
-- Available Regressors: {profile["regressors_available"]}
+            **Dataset Statistics:**
+            - Length: {profile["n_samples"]} rows
+            - Range: {profile["start_date"]} to {profile["end_date"]}
+            - Trend: {profile["trend"]}
+            - Seasonality: {profile["seasonality"]}
+            - Volatility: {profile["volatility"]}
+            - Missing/Zero values: {profile["missing_values"]} missing, {profile["zero_values"]} zeros.
+            - Available Regressors: {profile["regressors_available"]}
 
-**Candidate Algorithms:**
-1. LightGBM (Good for large data, complex patterns, supports lags)
-2. XGBoost (Robust, handles non-linearities well)
-3. Prophet (Best for strong seasonality, changepoints, handles holidays)
-4. SVM (SVR) (Good for smaller, noisy datasets with clear trends)
+            **Candidate Algorithms:**
+            1. LightGBM (Good for large data, complex patterns, supports lags)
+            2. XGBoost (Robust, handles non-linearities well)
+            3. Prophet (Best for strong seasonality, changepoints, handles holidays)
+            4. SVM (SVR) (Good for smaller, noisy datasets with clear trends)
 
-**Response Format:**
-Return ONLY a valid JSON object with this structure:
-{{
-    "model": "one of [lightgbm, xgboost, prophet, svm]",
-    "params": {{ key: value pairs for the chosen library }},
-    "feature_strategy": {{
-        "lags": boolean,
-        "rolling": boolean,
-        "date_parts": boolean
-    }},
-    "reasoning": "Short explanation why"
-}}
+            **Response Format:**
+            Return ONLY a valid JSON object with this structure:
+            {{
+                "model": "one of [lightgbm, xgboost, prophet, svm]",
+                "params": {{ key: value pairs for the chosen library }},
+                "feature_strategy": {{
+                    "lags": boolean,
+                    "rolling": boolean,
+                    "date_parts": boolean
+                }},
+                "reasoning": "Short explanation why"
+            }}
 
-Do not return code blocks or markdown. Just the raw JSON string.
-        """
+            Do not return code blocks or markdown. Just the raw JSON string.
+        """)
 
     def fit(self, df: pd.DataFrame, date_col: str, y_col: str, regressors: List[str] = None):
         self.date_col = date_col
